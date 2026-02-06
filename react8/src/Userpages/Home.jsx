@@ -7,7 +7,7 @@ const Home = () => {
     
     useEffect(()=>{
         const newacc=async()=>{
-            const accurl=await axios.post("http://localhost:3000/apis/newacc");
+            const accurl=await axios.post("http://localhost:3000/apis/newacc",{},{withCredentials:true});
             if(accurl.data.success){
                 setaccess(accurl.data.access)
             }
@@ -15,6 +15,7 @@ const Home = () => {
         newacc();
     },[])
 
+    
 
   return (
     <div>
