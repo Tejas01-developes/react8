@@ -33,6 +33,7 @@ const enteruser=async()=>{
 
 
 
+
   return (
     <div>
       
@@ -44,6 +45,7 @@ const enteruser=async()=>{
     <option value="User">User</option>
 </select>
 <button onClick={enteruser}>Register</button>
+<button onClick={()=>{window.location.href= "http://localhost:3000/apis/auth/google"}}>Continue with google</button>
 
 
 
