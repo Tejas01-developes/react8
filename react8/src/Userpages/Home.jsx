@@ -10,17 +10,20 @@ const Home = () => {
   const navigate=useNavigate();
     const{access,setaccess}=useContext(authcontext);
     const [loading,setloading]=useState(true)
-    const[field,setfield]=useState({file:[null],name:""})
+    const[field,setfield]=useState({file:null,name:""})
 
-    const handlefile=(e)=>{
-      const{name,field,value}=e.target;
-      if(name === "file"){
-        setfield({...field,file:file[0]});
-      }
-      setfield({
-        ...field,[name]:value
-      })
-    }
+
+
+const handlefile=(e)=>{
+  const{name,files,value}=e.target;
+  if(name=== "file"){
+    setfield((prev)=>({...prev,file:files[0],}))
+  }else{
+  setfield((prev)=>({...prev,[name]:value,}))
+  }
+}
+
+
 
     useEffect(()=>{   
       const newacc=async()=>{
@@ -47,8 +50,9 @@ if(!field.file){
   return alert("select the photo")
 }
 const formdata=new FormData();
+const filename=field.name ? field.name : field.file.name;
     formdata.append("filename",field.file);
-    formdata.append("name",field.name)
+    formdata.append("name",filename)
 }
     
 
