@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { authcontext } from '../Auth/Auth'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -9,38 +9,58 @@ const Home = () => {
 
   const navigate=useNavigate();
     const{access,setaccess}=useContext(authcontext);
+    const [loading,setloading]=useState(true)
+    const[field,setfield]=useState({file:[null],name:""})
 
-//     function decodejwt(token){
-//       if(!token){
-//         return console.log("no token")
-//       }
-//   const payload=token.split(".")[1];
-//   const decode=JSON.parse(atob(payload));
-//   return decode;
-// }
-// const decodeaccess=decodejwt(access);
-// console.log(decodeaccess);
-const noaccess=()=>{
-if(!access){
-  return navigate("/")
-}
-}
+    const handlefile=(e)=>{
+      const{name,field,value}=e.target;
+      if(name === "file"){
+        setfield({...field,file:file[0]});
+      }
+      setfield({
+        ...field,[name]:value
+      })
+    }
 
-    useEffect(()=>{  
+    useEffect(()=>{   
       const newacc=async()=>{
+        try{
             const accurl=await axios.post("http://localhost:3000/apis/newacc",{},{withCredentials:true});
             if(accurl.data.success){
                 setaccess(accurl.data.access)
+                setloading(false)
             }
-        }
+          
+        }catch(err){
+          console.log(err)
+      }finally{
+        setloading(false)
+      }
+      }
+    
         newacc();
     },[])
+
+
+const uploadfile=()=>{
+if(!field.file){
+  return alert("select the photo")
+}
+const formdata=new FormData();
+    formdata.append("filename",field.file);
+    formdata.append("name",field.name)
+}
+    
 
     
 
   return (
     <div>
-    {access}
+
+  {loading ? <h2>Loading........</h2> : <h1>{access}</h1>}
+
+   <input type="file" value={field.file} onChange={handlefile} name='file'/>
+   <input type="text" placeholder='Filename' value={field.name} onChange={handlefile} name='name'/>
     </div>
   )
 }
