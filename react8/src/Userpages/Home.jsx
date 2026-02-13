@@ -5,15 +5,13 @@ import axios from 'axios';
 
 
 const Home = () => {
-
-
-
+// usestate and all
     const{access,setaccess}=useContext(authcontext);
     const [loading,setloading]=useState(true)
     const[field,setfield]=useState({file:null,name:""})
+  const[email,setemail]=useState("")
 
-
-
+// handle fields
 const handlefile=(e)=>{
   const{name,files,value}=e.target;
   if(name=== "file"){
@@ -23,14 +21,15 @@ const handlefile=(e)=>{
   }
 }
 
-
-
+// get access token
     useEffect(()=>{   
       const newacc=async()=>{
         try{
             const accurl=await axios.post("http://localhost:3000/apis/newacc",{},{withCredentials:true});
             if(accurl.data.success){
                 setaccess(accurl.data.access)
+                setemail(accurl.data.email)
+                console.log("emaillll",accurl.data.email)
                 console.log(accurl.data.access)
                 setloading(false)
             }
@@ -46,6 +45,24 @@ const handlefile=(e)=>{
     },[])
 
 
+//  get all files
+
+const getfiles=async()=>{
+const fileurl=await axios.get("http://localhost:3000/images/getfiles",{headers:{Authorization:`Bearer ${access}`}});
+
+if(fileurl.data.success){
+  return console.log("success")
+}
+return console.log("error")
+
+}
+
+
+
+
+
+
+// function to upload file
 const uploadfile=async()=>{
 if(!field.file){
   return alert("select the photo")
@@ -65,6 +82,12 @@ const filename=field.name ? field.name : field.file.name;
 
 
 
+
+
+
+
+
+
   return (
     <div>
 <div>
@@ -75,7 +98,7 @@ const filename=field.name ? field.name : field.file.name;
    <button onClick={uploadfile}>upload</button>
     </div>
 
-  
+  <button onClick={getfiles}>get files</button>
 
 </div>
   )
