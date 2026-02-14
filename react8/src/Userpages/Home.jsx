@@ -10,6 +10,7 @@ const Home = () => {
     const [loading,setloading]=useState(true)
     const[field,setfield]=useState({file:null,name:""})
   const[email,setemail]=useState("")
+  const[url,seturl]=useState("")
 
 // handle fields
 const handlefile=(e)=>{
@@ -51,7 +52,7 @@ const getfiles=async()=>{
 const fileurl=await axios.get("http://localhost:3000/images/getfiles",{headers:{Authorization:`Bearer ${access}`}});
 
 if(fileurl.data.success){
-  return console.log("success")
+  return seturl(fileurl.data.url)
 }
 return console.log("error")
 
@@ -99,9 +100,11 @@ const filename=field.name ? field.name : field.file.name;
     </div>
 
   <button onClick={getfiles}>get files</button>
+<h1>{url}</h1>
 
 </div>
   )
 }
 
 export default Home
+"arn:aws:s3:::uploaddocs2026/*"
