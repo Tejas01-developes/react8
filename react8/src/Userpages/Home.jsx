@@ -101,10 +101,12 @@ const filename=field.name ? field.name : field.file.name;
 
   <button onClick={getfiles}>get files</button>
 <h1>{url}</h1>
-
+{/* <img src={url} alt=""/> */}
+<a href={url} target="_blank" rel="noopener noreferrer">
+  <img src={url} alt="uploaded" />
+  </a>
 </div>
   )
 }
-
+ 
 export default Home
-"arn:aws:s3:::uploaddocs2026/*"
