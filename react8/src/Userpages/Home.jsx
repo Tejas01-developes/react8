@@ -103,7 +103,7 @@ const filename=field.name ? field.name : field.file.name;
 <h1>{url}</h1>
 {/* <img src={url} alt=""/> */}
 <a href={url} target="_blank" rel="noopener noreferrer">
-  <img src={url} alt="uploaded" />
+  <img src={url} alt="" />
   </a>
 </div>
   )
