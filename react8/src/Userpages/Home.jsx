@@ -10,7 +10,7 @@ const Home = () => {
     const [loading,setloading]=useState(true)
     const[field,setfield]=useState({file:null,name:""})
   const[email,setemail]=useState("")
-  const[url,seturl]=useState("")
+  const[url,seturl]=useState([])
 
 // handle fields
 const handlefile=(e)=>{
@@ -100,11 +100,18 @@ const filename=field.name ? field.name : field.file.name;
     </div>
 
   <button onClick={getfiles}>get files</button>
-<h1>{url}</h1>
-{/* <img src={url} alt=""/> */}
-<a href={url} target="_blank" rel="noopener noreferrer">
-  <img src={url} alt="" />
-  </a>
+
+{
+  url && url.map((img,i)=>(
+    <div key={i}>
+    <a href={img}>
+      <img src={img} alt="" />
+    </a>
+   
+    </div>
+  ))
+}
+
 </div>
   )
 }
