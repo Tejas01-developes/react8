@@ -11,7 +11,7 @@ const Home = () => {
     const[field,setfield]=useState({file:null,name:""})
   const[email,setemail]=useState("")
   const[url,seturl]=useState([])
-
+const[name,setname]=useState([])
 // handle fields
 const handlefile=(e)=>{
   const{name,files,value}=e.target;
@@ -52,6 +52,8 @@ const getfiles=async()=>{
 const fileurl=await axios.get("http://localhost:3000/images/getfiles",{headers:{Authorization:`Bearer ${access}`}});
 
 if(fileurl.data.success){
+  
+ 
   return seturl(fileurl.data.url)
 }
 return console.log("error")
@@ -106,8 +108,11 @@ const filename=field.name ? field.name : field.file.name;
     <div key={i}>
     <a href={img}>
       <img src={img} alt="" />
+     
     </a>
-   
+    {name.map((nm,k)=>(
+        <h3>{nm}</h3>
+      ))}
     </div>
   ))
 }
@@ -117,3 +122,7 @@ const filename=field.name ? field.name : field.file.name;
 }
  
 export default Home
+
+
+
+
