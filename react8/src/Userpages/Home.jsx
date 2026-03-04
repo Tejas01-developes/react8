@@ -52,7 +52,7 @@ const getfiles=async()=>{
 const fileurl=await axios.get("http://localhost:3000/images/getfiles",{headers:{Authorization:`Bearer ${access}`}});
 
 if(fileurl.data.success){
-  
+  setname(fileurl.data.name);
  
   return seturl(fileurl.data.url)
 }
@@ -108,14 +108,12 @@ const filename=field.name ? field.name : field.file.name;
     <div key={i}>
     <a href={img}>
       <img src={img} alt="" />
-     
     </a>
-    {name.map((nm,k)=>(
-        <h3>{nm}</h3>
-      ))}
+ 
     </div>
   ))
 }
+
 
 </div>
   )
